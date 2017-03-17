@@ -20,12 +20,10 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
         physicsWorld.contactDelegate = self
         self.physicsBody = SKPhysicsBody(edgeLoopFrom: frame)
         createBackground()
-        makeBall()
-        makePaddle()
-        makeBrick()
         makeLoseZone()
+        resetGame()
         ball.physicsBody?.isDynamic = true
-        ball.physicsBody?.applyImpulse(CGVector(dx: 5, dy: 3))
+        ball.physicsBody?.applyImpulse(CGVector(dx: 5, dy: 5))
     }
     
     override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {
@@ -43,15 +41,23 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
     }
     
     func didBegin(_ contact: SKPhysicsContact) {
+        
         if contact.bodyA.node?.name == "brick" || contact.bodyB.node?.name == "brick" {
             print("You win!")
-            brick.removeFromParent()
-            ball.removeFromParent()
+            resetGame()
         }
         if contact.bodyA.node?.name == "loseZone" || contact.bodyB.node?.name == "loseZone" {
             print("You lose!")
-            ball.removeFromParent()
+            resetGame()
         }
+    }
+    
+    func resetGame() {
+        ball.removeFromParent()
+        makeBall()
+        paddle.removeFromParent()
+        makeBall()
+        makeBrick()
     }
     
     func createBackground() {
