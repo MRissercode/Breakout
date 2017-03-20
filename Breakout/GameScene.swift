@@ -10,11 +10,14 @@ import SpriteKit
 import GameplayKit
 
 class GameScene: SKScene, SKPhysicsContactDelegate {
-
+    
     var ball = SKShapeNode()
     var paddle = SKSpriteNode()
     var brick = SKSpriteNode()
     var loseZone = SKSpriteNode()
+    var playLabel = SKLabelNode()
+    var scoreLabel = SKLabelNode()
+    var livesLabel = SKLabelNode()
     
     override func didMove(to view: SKView) {
         physicsWorld.contactDelegate = self
@@ -22,11 +25,11 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
         createBackground()
         makeLoseZone()
         resetGame()
-        ball.physicsBody?.isDynamic = true
-        ball.physicsBody?.applyImpulse(CGVector(dx: 5, dy: 5))
     }
     
     override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {
+        ball.physicsBody?.isDynamic = true
+        ball.physicsBody?.applyImpulse(CGVector(dx: 5, dy: 5))
         for touch in touches {
             let location = touch.location(in: self)
             paddle.position.x = location.x
@@ -58,6 +61,7 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
         paddle.removeFromParent()
         makeBall()
         makeBrick()
+        makeLabels()
     }
     
     func createBackground() {
@@ -125,5 +129,14 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
         loseZone.physicsBody?.isDynamic = false
         addChild(loseZone)
     }
-
+    
+    func makeLabels() {
+        playLabel.fontSize = 24
+        playLabel.text = "Welcome to Breakout" + "Tap to begin"
+        playLabel.fontName = "Time New Roman"
+        playLabel.name = "Start"
+        playLabel.position = CGPoint(x: frame.midX, y: frame.midY - 50)
+        addChild(playLabel)
+    }
+    
 }
