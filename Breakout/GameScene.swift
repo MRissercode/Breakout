@@ -13,7 +13,7 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
 
     var ball = SKShapeNode()
     var paddle = SKSpriteNode()
-    var bricks = [SKSpriteNode()]
+    //var bricks = [SKSpriteNode()]//
     var brick = SKSpriteNode()
     var removedBricks = 0
     var loseZone = SKSpriteNode()
@@ -105,22 +105,30 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
         addChild(paddle)
     }
     
-    func makeBrick() {
-        for brick in bricks {
-            if brick.parent != nil {
-                brick.removeFromParent()
-        }
-    }
-        bricks.removeAll()
-        removedBricks = 0
-        
-       // let count = Int(frame.width)// 
-        
-        
-        
+//   func makeBrick() {
+//        for brick in bricks {
+//        if brick.parent != nil {
+//        brick.removeFromParent()
+//        }
+//   }
+//      bricks.removeAll()
+//      removedBricks = 0
     
-    }
-    func makeBrick(x:Int, y:Int, color: UIColor){
+//    }
+    
+//    for brick in bricks {
+//    if brick.parent = nil {
+//    brick.addFromParent()
+//    }
+//
+//}
+  //  bricks.removeAll()
+  //  removedBricks = 16
+        
+
+//}//
+    
+    func makeBrick(){
         let brick = SKSpriteNode(color: UIColor.blue, size: CGSize(width: frame.width/5, height: 50))
         brick.position = CGPoint(x: frame.midX, y: frame.maxY-30)
         brick.name = "brick"
