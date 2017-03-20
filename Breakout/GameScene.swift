@@ -13,10 +13,10 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
 
     var ball = SKShapeNode()
     var paddle = SKSpriteNode()
+    var bricks = [SKSpriteNode()]
     var brick = SKSpriteNode()
+    var removedBricks = 0
     var loseZone = SKSpriteNode()
-    //var numberOfBricks = 15   
-    // i'm still trying to figure out the array for the bricks
     
     override func didMove(to view: SKView) {
         
@@ -106,15 +106,28 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
     }
     
     func makeBrick() {
+        for brick in bricks {
+            if brick.parent != nil {
+                brick.removeFromParent()
+        }
+    }
+        bricks.removeAll()
+        removedBricks = 0
         
-      //  for i in 0..<numberOfBricks{
+       // let count = Int(frame.width)// 
+        
+        
+        
+    
+    }
+    func makeBrick(x:Int, y:Int, color: UIColor){
         let brick = SKSpriteNode(color: UIColor.blue, size: CGSize(width: frame.width/5, height: 50))
         brick.position = CGPoint(x: frame.midX, y: frame.maxY-30)
         brick.name = "brick"
         brick.physicsBody = SKPhysicsBody(rectangleOf: brick.size)
         brick.physicsBody?.isDynamic = false
         addChild(brick)
-  //      }
+  
     }
     func makeLoseZone() {
         let loseZone = SKSpriteNode(color: UIColor.red, size: CGSize(width: frame.width, height: 50))
@@ -126,3 +139,4 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
     }
 
 }
+
