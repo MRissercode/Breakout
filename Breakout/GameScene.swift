@@ -18,18 +18,24 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
     var playLabel = SKLabelNode()
     var scoreLabel = SKLabelNode()
     var livesLabel = SKLabelNode()
+    var score = 0
+    var lives = 3
+    var gameIsRunning = false
     
     override func didMove(to view: SKView) {
         physicsWorld.contactDelegate = self
         self.physicsBody = SKPhysicsBody(edgeLoopFrom: frame)
         createBackground()
         makeLoseZone()
+        makeLabels()
         resetGame()
     }
     
     override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {
         ball.physicsBody?.isDynamic = true
         ball.physicsBody?.applyImpulse(CGVector(dx: 5, dy: 5))
+        gameIsRunning = true
+        playLabel.text = ""
         for touch in touches {
             let location = touch.location(in: self)
             paddle.position.x = location.x
@@ -44,13 +50,12 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
     }
     
     func didBegin(_ contact: SKPhysicsContact) {
-        
         if contact.bodyA.node?.name == "brick" || contact.bodyB.node?.name == "brick" {
-            print("You win!")
+            playLabel.text = "Congratulations! Tap to Play Again."
             resetGame()
         }
         if contact.bodyA.node?.name == "loseZone" || contact.bodyB.node?.name == "loseZone" {
-            print("You lose!")
+            playLabel.text = "Game Over! Tap to Play Agaian."
             resetGame()
         }
     }
@@ -59,9 +64,9 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
         ball.removeFromParent()
         makeBall()
         paddle.removeFromParent()
-        makeBall()
+        makePaddle()
         makeBrick()
-        makeLabels()
+        gameIsRunning = false
     }
     
     func createBackground() {
@@ -131,12 +136,26 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
     }
     
     func makeLabels() {
-        playLabel.fontSize = 24
-        playLabel.text = "Welcome to Breakout" + "Tap to begin"
-        playLabel.fontName = "Time New Roman"
+        playLabel.fontSize = 30
+        playLabel.fontName = "Arial"
+        playLabel.text = "Welcome to Breakout. Tap to Begin"
         playLabel.name = "Start"
         playLabel.position = CGPoint(x: frame.midX, y: frame.midY - 50)
         addChild(playLabel)
+        
+        scoreLabel.fontName = "Arial"
+        scoreLabel.fontSize = 24
+        scoreLabel.text = "Score: " + String(score)
+        scoreLabel.name = "Scoreboard"
+        scoreLabel.position = CGPoint(x: frame.minX+scoreLabel.frame.width, y: frame.minY+25)
+        addChild(scoreLabel)
+        
+        livesLabel.fontSize = 24
+        livesLabel.fontName = "Arial"
+        livesLabel.text = "Lives: " + String(lives)
+        livesLabel.name = "Live Display"
+        livesLabel.position = CGPoint(x: frame.maxX-livesLabel.frame.width, y: frame.minY+25)
+        addChild(livesLabel)
     }
     
 }
