@@ -13,9 +13,6 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
 
     var ball = SKShapeNode()
     var paddle = SKSpriteNode()
-    //var bricks = [SKSpriteNode()]//
-    var brick = SKSpriteNode()
-    var removedBricks = 0
     var loseZone = SKSpriteNode()
     
     override func didMove(to view: SKView) {
@@ -25,7 +22,6 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
         createBackground()
         makeBall()
         makePaddle()
-        makeBrick()
         makeLoseZone()
         ball.physicsBody?.isDynamic = true
         ball.physicsBody?.applyImpulse(CGVector(dx: 5, dy: 3))
@@ -46,14 +42,15 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
     }
     
     func didBegin(_ contact: SKPhysicsContact) {
-        if contact.bodyA.node?.name == "brick" || contact.bodyB.node?.name == "brick" {
-            print("You win!")
-            brick.removeFromParent()
-            ball.removeFromParent()
-        }
-        if contact.bodyA.node?.name == "loseZone" || contact.bodyB.node?.name == "loseZone" {
-            print("You lose!")
-            ball.removeFromParent()
+        let bodyAName = contact.bodyA.node?.name
+        let bodyBName = contact.bodyB.node?.name
+        
+        if bodyAName == "Ball" && bodyBName == "Brick" || bodyAName == "Brick" && bodyBName == "Ball"{
+            if bodyAName == "Brick" {
+                contact.bodyA.node?.removeFromParent()
+            } else if bodyBName == "Brick" {
+                contact.bodyB.node?.removeFromParent()
+            }
         }
     }
     
@@ -103,32 +100,10 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
         paddle.physicsBody = SKPhysicsBody(rectangleOf: paddle.size)
         paddle.physicsBody?.isDynamic = false
         addChild(paddle)
-    }
-    
-//   func makeBrick() {
-//        for brick in bricks {
-//        if brick.parent != nil {
-//        brick.removeFromParent()
-//        }
-//   }
-//      bricks.removeAll()
-//      removedBricks = 0
-    
-//    }
-    
-//    for brick in bricks {
-//    if brick.parent = nil {
-//    brick.addFromParent()
-//    }
-//
-//}
-  //  bricks.removeAll()
-  //  removedBricks = 16
-        
 
-//}//
-    
-    func makeBrick(){
+    }
+
+        func makeBrick() {
         let brick = SKSpriteNode(color: UIColor.blue, size: CGSize(width: frame.width/5, height: 50))
         brick.position = CGPoint(x: frame.midX, y: frame.maxY-30)
         brick.name = "brick"
@@ -137,6 +112,7 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
         addChild(brick)
   
     }
+
     func makeLoseZone() {
         let loseZone = SKSpriteNode(color: UIColor.red, size: CGSize(width: frame.width, height: 50))
         loseZone.position = CGPoint(x: frame.midX, y: frame.minY+25)
