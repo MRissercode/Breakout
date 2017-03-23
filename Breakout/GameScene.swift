@@ -26,6 +26,9 @@ class GameScene: SKScene,SKPhysicsContactDelegate {
         self.physicsBody = border
         
         self.physicsWorld.contactDelegate = self
+        
+        makeLoseZone()
+        
     }
     
     override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {
@@ -59,9 +62,10 @@ class GameScene: SKScene,SKPhysicsContactDelegate {
     
     
     
-   /*
-    func createBackground() {
+   
+   /*  func createBackground() {
         let stars = SKTexture(imageNamed: "stars")
+        
         for i in 0...1 {
             let starsBackground = SKSpriteNode(texture: stars)
             starsBackground.zPosition = -1
@@ -76,6 +80,9 @@ class GameScene: SKScene,SKPhysicsContactDelegate {
     }
 
  
+     */
+
+    
     func makeLoseZone() {
         let loseZone = SKSpriteNode(color: UIColor.red, size: CGSize(width: frame.width, height: 50))
         loseZone.position = CGPoint(x: frame.midX, y: frame.minY+25)
@@ -84,7 +91,7 @@ class GameScene: SKScene,SKPhysicsContactDelegate {
         loseZone.physicsBody?.isDynamic = false
         addChild(loseZone)
     }
- */
+
 
  
 }
