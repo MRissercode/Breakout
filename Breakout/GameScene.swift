@@ -31,6 +31,10 @@ class GameScene: SKScene,SKPhysicsContactDelegate {
     }
     
     override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {
+        ball.physicsBody?.isDynamic = true
+        ball.physicsBody?.applyImpulse(CGVector(dx: 5, dy: 5))
+        gameIsRunning = true
+        playLabel.text = ""
         for touch in touches {
             let touchLocation = touch.location(in: self)
             paddle.position.x = touchLocation.x
