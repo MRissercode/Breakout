@@ -67,9 +67,9 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
     
     func resetGame() {
         ball.removeFromParent()
-        makeBall()
+        ball = self.childNode(withName: "Ball") as! SKSpriteNode
         paddle.removeFromParent()
-        makePaddle()
+        paddle = self.childNode(withName: "Paddle") as! SKSpriteNode
         makeBrick()
         gameIsRunning = false
     }
@@ -90,7 +90,7 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
     }
     
     func makeBall() {
-        ball = SKShapeNode(circleOfRadius: 10)
+        ball = self.childNode(withName: "Ball") as! SKSpriteNode
         ball.position = CGPoint(x: frame.midX, y: frame.midY)
         ball.strokeColor = UIColor.black
         ball.fillColor = UIColor.yellow
