@@ -13,12 +13,13 @@ import GameplayKit
 class GameScene: SKScene,SKPhysicsContactDelegate {
     var ball:SKSpriteNode!
     var paddle:SKSpriteNode!
+    var loseZone: SKSpriteNode!
     
     
     override func didMove(to view: SKView) {
         ball = self.childNode(withName: "Ball") as! SKSpriteNode
         paddle = self.childNode(withName: "Paddle") as! SKSpriteNode
-        
+        loseZone = self.childNode(withName: "Lose Zone") as! SKSpriteNode
         ball.physicsBody?.applyImpulse(CGVector(dx: 50, dy: 50))
         
         let border = SKPhysicsBody(edgeLoopFrom: (view.scene?.frame)!)
@@ -26,8 +27,6 @@ class GameScene: SKScene,SKPhysicsContactDelegate {
         self.physicsBody = border
         
         self.physicsWorld.contactDelegate = self
-        
-        makeLoseZone()
         
     }
     
