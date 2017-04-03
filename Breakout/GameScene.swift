@@ -11,7 +11,7 @@ import GameplayKit
 
 class GameScene: SKScene, SKPhysicsContactDelegate {
     
-    var ball = SKShapeNode()
+    var ball = SKSpriteNode()
     var paddle = SKSpriteNode()
     var brick = SKSpriteNode()
     var loseZone = SKSpriteNode()
@@ -23,12 +23,10 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
     var gameIsRunning = false
     
     override func didMove(to view: SKView) {
-        
+        ball = self.childNode(withName: "Ball") as! SKSpriteNode
         paddle = self.childNode(withName: "Paddle") as! SKSpriteNode
-        
-        ball.physicsBody?.applyImpulse(CGVector(dx: 50, dy: 50))
-        loseZone = self.childNode(withName: "Lose Zone") as! SKSpriteNode
-        let border = SKPhysicsBody(edgeLoopFrom: (view.scene?.frame)!)
+        ball.physicsBody?.applyImpulse(CGVector(dx: 50, dy: 50)
+        let border = SKPhysicsBody(edgeLoopFrom:(view.scene?.frame)!)
         border.friction = 0
         self.physicsBody = border
         
@@ -66,11 +64,10 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
     }
     
     func resetGame() {
-       //ball.removeFromParent()
-       // makeBall()
-       // paddle.removeFromParent()
-       // makePaddle()
-       // makeBrick() //
+      ball.removeFromParent()
+        ball = self.childNode(withName: "Ball") as! SKSpriteNode
+        paddle.removeFromParent()
+        paddle = self.childNode(withName: "Paddle") as!SKSpriteNode
         gameIsRunning = false
     }
     
@@ -89,11 +86,9 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
         }
     }
     
-   /* func makeBall() {
-        ball = SKShapeNode(circleOfRadius: 10)
+    func makeBall() {
+        ball = self.childNode(withName: "Ball") as! SKSpriteNode
         ball.position = CGPoint(x: frame.midX, y: frame.midY)
-        ball.strokeColor = UIColor.black
-        ball.fillColor = UIColor.yellow
         ball.name = "ball"
         // physics shape matches ball image
         ball.physicsBody = SKPhysicsBody(circleOfRadius: 10)
@@ -131,7 +126,7 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
         addChild(brick)
     }
  
- */
+
     
     func makeLoseZone() {
         let loseZone = SKSpriteNode(color: UIColor.red, size: CGSize(width: frame.width, height: 50))
