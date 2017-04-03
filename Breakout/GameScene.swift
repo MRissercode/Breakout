@@ -23,11 +23,11 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
     var gameIsRunning = false
     
     override func didMove(to view: SKView) {
-        ball = self.childNode(withName: "Ball") as! SKSpriteNode
+        
         paddle = self.childNode(withName: "Paddle") as! SKSpriteNode
         
         ball.physicsBody?.applyImpulse(CGVector(dx: 50, dy: 50))
-        
+        loseZone = self.childNode(withName: "Lose Zone") as! SKSpriteNode
         let border = SKPhysicsBody(edgeLoopFrom: (view.scene?.frame)!)
         border.friction = 0
         self.physicsBody = border
@@ -66,11 +66,11 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
     }
     
     func resetGame() {
-        ball.removeFromParent()
-        makeBall()
-        paddle.removeFromParent()
-        makePaddle()
-        makeBrick()
+       //ball.removeFromParent()
+       // makeBall()
+       // paddle.removeFromParent()
+       // makePaddle()
+       // makeBrick() //
         gameIsRunning = false
     }
     
@@ -89,7 +89,7 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
         }
     }
     
-    func makeBall() {
+   /* func makeBall() {
         ball = SKShapeNode(circleOfRadius: 10)
         ball.position = CGPoint(x: frame.midX, y: frame.midY)
         ball.strokeColor = UIColor.black
@@ -122,7 +122,7 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
         addChild(paddle)
     }
     
-    func makeBrick() {
+        func makeBrick() {
         brick = SKSpriteNode(color: UIColor.blue, size: CGSize(width: frame.width/5, height: 50))
         brick.position = CGPoint(x: frame.midX, y: frame.maxY-30)
         brick.name = "brick"
@@ -130,6 +130,8 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
         brick.physicsBody?.isDynamic = false
         addChild(brick)
     }
+ 
+ */
     
     func makeLoseZone() {
         let loseZone = SKSpriteNode(color: UIColor.red, size: CGSize(width: frame.width, height: 50))
