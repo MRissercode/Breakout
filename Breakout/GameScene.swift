@@ -25,13 +25,10 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
     override func didMove(to view: SKView) {
         ball = self.childNode(withName: "Ball") as! SKSpriteNode
         paddle = self.childNode(withName: "Paddle") as! SKSpriteNode
-        
         ball.physicsBody?.applyImpulse(CGVector(dx: 50, dy: 50))
-        
         let border = SKPhysicsBody(edgeLoopFrom: (view.scene?.frame)!)
         border.friction = 0
         self.physicsBody = border
-        
         self.physicsWorld.contactDelegate = self
         
     }
@@ -111,7 +108,7 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
     }
     
     func makePaddle() {
-        paddle = SKSpriteNode(color: UIColor.white, size: CGSize(width: frame.width/4, height: frame.height/25))
+        paddle = self.childNode(withName: "Paddle") as! SKSpriteNode
         paddle.position = CGPoint(x: frame.midX, y: frame.minY+125)
         paddle.name = "paddle"
         paddle.physicsBody = SKPhysicsBody(rectangleOf: paddle.size)
