@@ -11,7 +11,7 @@ import GameplayKit
 
 class GameScene: SKScene, SKPhysicsContactDelegate {
     
-    var ball = SKShapeNode()
+    var ball = SKSpriteNode()
     var paddle = SKSpriteNode()
     var brick = SKSpriteNode()
     var loseZone = SKSpriteNode()
@@ -70,7 +70,6 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
         ball = self.childNode(withName: "Ball") as! SKSpriteNode
         paddle.removeFromParent()
         paddle = self.childNode(withName: "Paddle") as! SKSpriteNode
-        makeBrick()
         gameIsRunning = false
     }
     
@@ -92,8 +91,6 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
     func makeBall() {
         ball = self.childNode(withName: "Ball") as! SKSpriteNode
         ball.position = CGPoint(x: frame.midX, y: frame.midY)
-        ball.strokeColor = UIColor.black
-        ball.fillColor = UIColor.yellow
         ball.name = "ball"
         // physics shape matches ball image
         ball.physicsBody = SKPhysicsBody(circleOfRadius: 10)
